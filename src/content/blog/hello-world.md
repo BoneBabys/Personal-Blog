@@ -1,11 +1,15 @@
 ---
-title: "Hello, world"
-description: "A first note from my new personal blog."
+title: "泰山晨光：第一次在中国山顶看见日出"
+description: "我在中国的第一次登山，记下晨光、风和山路上的细碎感受。"
 pubDate: 2026-11-17
 tags:
-  - notes
+  - 山水
 ---
 
-Welcome to my little corner of the internet. This is where I’ll share ideas, projects, and things I’m learning.
+我第一次真正感受到中国山水的壮阔，是在泰山的凌晨。天还没亮时，很多人已经在山路上出发，脚步沉稳，灯光和呼吸在雾气里交织。
 
-Edit or replace this post in `src/content/blog/hello-world.md` to make it your own.
+走到半山腰时，空气开始变得冷而清晰，山风有一种把人从睡意里拽出来的力道。我一路上看见不少游客停在石阶边，背着包，拍照、聊天、喘息，仿佛每一步都是在和这座山打招呼。
+
+到了山顶，天色才慢慢透亮，云海像被轻轻掀开，远处的群山被晨光铺成一层淡金色。我站在最顶端，忽然明白为什么很多人会说，登山并不是为了征服山，而是为了把自己从匆忙里拉回一丁点安静。
+
+那天，我没有急着拍很多照片，只认真记住了风的味道、路的弯度和那一瞬间的心跳。它像一张很长的明信片，写着我在中国第一次真正和山相遇。
