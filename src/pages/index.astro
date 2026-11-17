@@ -2,62 +2,83 @@
 import { getCollection } from 'astro:content';
 import '../styles/global.css';
 
-const posts = (await getCollection('blog')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
-
+const allPosts = await getCollection('blog');
+const travelPosts = allPosts.filter((post) => post.data.section === 'travel').sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const skillPosts = allPosts.filter((post) => post.data.section === 'skills').sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const siteName = '我在中国的记忆';
+const dateFormat = new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="记录我在中国所见的山、水、人和味道。" />
-    <title>{siteName} · 山海之间</title>
+    <meta name="description" content="旅行见闻与专业技能分享：彼此独立，各自精彩。" />
+    <link rel="alternate" type="application/rss+xml" title={`${siteName} RSS`} href="/rss.xml" />
+    <title>{siteName} · 旅行与技能</title>
   </head>
   <body>
-    <main class="page-shell">
+    <main class="page-shell home-shell">
       <header class="site-header">
         <a class="wordmark" href="/">{siteName}<span>。</span></a>
-        <nav aria-label="主导航">
-          <a href="#about">关于</a>
-          <a href="mailto:hello@example.com">联系</a>
+        <nav aria-label="Main navigation">
+          <a href="/travel/">Travel</a>
+          <a href="/skills/">Skills</a>
         </nav>
       </header>
 
       <section class="intro" id="about">
-        <p class="eyebrow">我在中国的日记</p>
-        <h1>我在中国看见的，<br /><span>是一段山水与人情的故事。</span></h1>
-        <p class="intro-copy">这里记录我在中国走过的山路、夜市和日出——那些不急着被定义的日常，以及被风景慢慢放大的幸福。</p>
-        <span class="intro-seal" aria-hidden="true">记<br />忆</span>
+        <p class="eyebrow">旅行与专业技能 · 两种独立的记录</p>
+        <h1>记录所见，<br /><span>也分享所学。</span></h1>
+        <p class="intro-copy">从山水街巷的旅行手记，到技术实践与项目复盘。选择一扇门，进入各自完整的内容空间。</p>
       </section>
 
-      <section class="posts-section" aria-labelledby="posts-heading">
-        <div class="section-heading">
-          <h2 id="posts-heading">最近的文字</h2>
-          <span>共 {posts.length} 篇</span>
-        </div>
-        <div class="post-list">
-          {posts.map((post) => (
-            <article class="post-card">
-              <div class="post-meta">
-                <time datetime={post.data.pubDate.toISOString()}>
-                  {post.data.pubDate.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}
-                </time>
-                {post.data.tags.length > 0 && <span class="tag">{post.data.tags[0]}</span>}
-              </div>
-              <h3><a href={`/blog/${post.id}/`}>{post.data.title} <span aria-hidden="true">↗</span></a></h3>
-              <p>{post.data.description}</p>
-            </article>
-          ))}
-          {posts.length === 0 && <p class="empty-state">新的旅途记录正在路上，敬请期待。</p>}
-        </div>
-      </section>
+      <div class="section-columns">
+        <section class="content-section travel-section" aria-labelledby="travel-heading">
+          <div class="section-heading">
+            <div><p class="section-kicker">山水 · 城市 · 人间烟火</p><h2 id="travel-heading">旅行见闻</h2></div>
+            <a class="section-link" href="/travel/">全部旅行 <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="post-list">
+            {travelPosts.map((post) => (
+              <article class="post-card travel-card">
+                <a class="travel-image-link" href={`/travel/${post.id}/`} aria-label={`阅读：${post.data.title}`}>
+                  <img class="travel-image" src={post.data.image ?? '/images/ink-landscape.svg'} alt={`${post.data.title} 风景预览`} loading="lazy" />
+                </a>
+                <div class="travel-card-body">
+                  <div class="post-meta"><time datetime={post.data.pubDate.toISOString()}>{dateFormat.format(post.data.pubDate)}</time></div>
+                  <h3><a href={`/travel/${post.id}/`}>{post.data.title} <span aria-hidden="true">↗</span></a></h3>
+                  <p>{post.data.description}</p>
+                  <div class="tag-list">{post.data.tags.map((tag) => <span class="tag">#{tag}</span>)}</div>
+                </div>
+              </article>
+            ))}
+            {travelPosts.length === 0 && <p class="empty-state">旅行记录正在整理中。</p>}
+          </div>
+        </section>
+
+        <section class="content-section skills-section" aria-labelledby="skills-heading">
+          <div class="section-heading">
+            <div><p class="section-kicker">技术 · 项目 · 方法</p><h2 id="skills-heading">专业技能</h2></div>
+            <a class="section-link" href="/skills/">全部文章 <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="post-list">
+            {skillPosts.map((post) => (
+              <article class="post-card skill-card">
+                <div class="post-meta"><time datetime={post.data.pubDate.toISOString()}>{dateFormat.format(post.data.pubDate)}</time></div>
+                <h3><a href={`/skills/${post.id}/`}>{post.data.title} <span aria-hidden="true">↗</span></a></h3>
+                <p>{post.data.description}</p>
+                <div class="tag-list">{post.data.tags.map((tag) => <span class="tag">#{tag}</span>)}</div>
+              </article>
+            ))}
+            {skillPosts.length === 0 && <p class="empty-state">技能文章正在准备中。</p>}
+          </div>
+        </section>
+      </div>
 
       <footer class="site-footer">
         <span>© {new Date().getFullYear()} {siteName}</span>
-        <a href="https://github.com/">GitHub ↗</a>
+        <a href="/rss.xml">订阅 RSS</a>
       </footer>
     </main>
   </body>

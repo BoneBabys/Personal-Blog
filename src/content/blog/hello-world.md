@@ -2,8 +2,11 @@
 title: "泰山晨光：第一次在中国山顶看见日出"
 description: "我在中国的第一次登山，记下晨光、风和山路上的细碎感受。"
 pubDate: 2024-10-12
+section: travel
 tags:
-  - 山水
+  - travel
+  - taishan
+image: /images/travel/taishan.svg
 ---
 
 我第一次真正感受到中国山水的壮阔，是在泰山的凌晨。天还没亮时，很多人已经在山路上出发，脚步沉稳，灯光和呼吸在雾气里交织。

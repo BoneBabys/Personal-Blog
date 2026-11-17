@@ -2,8 +2,11 @@
 title: "乐山小吃街：一口一段城市故事"
 description: "在乐山的夜市里，街头小吃和人声构成了最真实的城市温度。"
 pubDate: 2024-10-14
+section: travel
 tags:
-  - 美食
+  - travel
+  - leshan
+image: /images/travel/leshan.svg
 ---
 
 我在乐山的夜市走了一阵，灯光很亮，空气里混着油炸香、蒜香和热气。小店挨着小店，很多都没有特别华丽的招牌，但每一家都在忙着把一种味道做得真实。

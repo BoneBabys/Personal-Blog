@@ -1,33 +1,25 @@
-# Personal Blog
+# 我在中国的记忆 · Astro
 
-A minimal personal blog built with Astro. Blog posts are Markdown files and are rendered as static pages at build time.
+基于 Astro 5 的双栏目博客：旅行见闻与专业技能分享彼此独立，分别使用 `/travel/` 与 `/skills/` 路径。
 
-## Get started
+## 本地运行
 
 ```sh
 npm install
 npm run dev
 ```
 
-Open the local URL printed by Astro. Build the site with `npm run build` and preview the production build with `npm run preview`.
+访问 Astro 显示的本地地址。构建及预览：`npm run build`、`npm run preview`。
 
-## Customize
+## 内容分类
 
-- Replace `Your Name` in `src/pages/index.astro` and `src/pages/blog/[...slug].astro`.
-- Update the contact email and GitHub link in `src/pages/index.astro`.
-- Add a Markdown file in `src/content/blog/` with frontmatter fields `title`, `description`, `pubDate`, and optional `tags`.
-- Adjust the colors and typography in `src/styles/global.css`.
+在 `src/content/blog/` 新建 Markdown 文件，并填写：
 
-Example post frontmatter:
+- `section: travel` 或 `section: skills`
+- `title`、`description`、`pubDate`
+- `tags`：旅行文章使用 `travel` 和地点标签；技能文章使用技能类型与工具名
+- 旅行文章另加 `image`，指向 `/images/` 下的卡片预览图
 
-```yaml
----
-title: "A new post"
-description: "A short summary for the post list and search engines."
-pubDate: 2026-11-17
-tags:
-  - notes
----
+技能文章的 Markdown 围栏代码由 Astro/Shiki 在构建时进行语法高亮；文章标题会自动生成目录锚点。RSS 订阅地址为 `/rss.xml`，包含两个栏目文章的分类与永久链接。
 
-Write your post here.
-```
+RSS 默认站点地址使用 GitHub Pages 项目站点。部署到其他域名时，请在 `astro.config.mjs` 中设置 `site`，RSS 会使用 Astro 的 `SITE` 值。

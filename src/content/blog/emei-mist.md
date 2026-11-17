@@ -2,8 +2,11 @@
 title: "峨眉山雾中：在山路上慢下来"
 description: "在峨眉山的晨雾里，我学会了把时间留给风景和呼吸。"
 pubDate: 2025-03-08
+section: travel
 tags:
-  - 旅行
+  - travel
+  - emei-mountain
+image: /images/travel/emei.svg
 ---
 
 峨眉山的雾很轻，像一层薄薄的纱，贴在山坡和树梢之间。早晨刚起步时，天空还没有完全亮起来，我沿着石阶往上走，脚底踩着路面，手心和山风凉凉的，整个人都慢了下来。
