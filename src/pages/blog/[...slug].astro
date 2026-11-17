@@ -1,0 +1,43 @@
+---
+import { getCollection, render } from 'astro:content';
+import '../../styles/global.css';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={post.data.description} />
+    <title>{post.data.title} — Your Name</title>
+  </head>
+  <body>
+    <main class="page-shell article-shell">
+      <header class="site-header">
+        <a class="wordmark" href="/">Your Name<span>.</span></a>
+        <a class="back-link" href="/">← All posts</a>
+      </header>
+      <article class="article">
+        <p class="eyebrow">
+          <time datetime={post.data.pubDate.toISOString()}>
+            {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </time>
+        </p>
+        <h1>{post.data.title}</h1>
+        <p class="article-description">{post.data.description}</p>
+        <div class="article-content"><Content /></div>
+      </article>
+      <footer class="site-footer">
+        <span>© {new Date().getFullYear()} Your Name</span>
+        <a href="/">Back home ↑</a>
+      </footer>
+    </main>
+  </body>
+</html>

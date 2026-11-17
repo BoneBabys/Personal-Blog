@@ -1,0 +1,63 @@
+---
+import { getCollection } from 'astro:content';
+import '../styles/global.css';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const siteName = 'Your Name';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Notes, projects, and ideas from {siteName}." />
+    <title>{siteName} — Personal Blog</title>
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="site-header">
+        <a class="wordmark" href="/">{siteName}<span>.</span></a>
+        <nav aria-label="Main navigation">
+          <a href="#about">About</a>
+          <a href="mailto:hello@example.com">Contact</a>
+        </nav>
+      </header>
+
+      <section class="intro" id="about">
+        <p class="eyebrow">A PERSONAL BLOG</p>
+        <h1>Curious about the world.<br /><span>Writing it down.</span></h1>
+        <p class="intro-copy">A collection of notes, projects, and ideas. Thanks for stopping by.</p>
+      </section>
+
+      <section class="posts-section" aria-labelledby="posts-heading">
+        <div class="section-heading">
+          <h2 id="posts-heading">Latest writing</h2>
+          <span>{posts.length} {posts.length === 1 ? 'post' : 'posts'}</span>
+        </div>
+        <div class="post-list">
+          {posts.map((post) => (
+            <article class="post-card">
+              <div class="post-meta">
+                <time datetime={post.data.pubDate.toISOString()}>
+                  {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                </time>
+                {post.data.tags.length > 0 && <span class="tag">{post.data.tags[0]}</span>}
+              </div>
+              <h3><a href={`/blog/${post.id}/`}>{post.data.title} <span aria-hidden="true">↗</span></a></h3>
+              <p>{post.data.description}</p>
+            </article>
+          ))}
+          {posts.length === 0 && <p class="empty-state">New writing is on its way. Check back soon.</p>}
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <span>© {new Date().getFullYear()} {siteName}</span>
+        <a href="https://github.com/">GitHub ↗</a>
+      </footer>
+    </main>
+  </body>
+</html>
