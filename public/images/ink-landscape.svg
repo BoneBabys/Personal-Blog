@@ -1,14 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 520" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
   <defs>
-    <linearGradient id="mist" x1="800" y1="0" x2="800" y2="520" gradientUnits="userSpaceOnUse"><stop stop-color="#fffaf1" stop-opacity="0"/><stop offset=".48" stop-color="#fffaf1" stop-opacity=".16"/><stop offset="1" stop-color="#fffaf1" stop-opacity=".72"/></linearGradient>
-    <linearGradient id="mountain" x1="800" y1="80" x2="800" y2="520" gradientUnits="userSpaceOnUse"><stop stop-color="#9c725e" stop-opacity=".22"/><stop offset="1" stop-color="#7b5545" stop-opacity=".08"/></linearGradient>
-    <linearGradient id="water" x1="800" y1="300" x2="800" y2="520" gradientUnits="userSpaceOnUse"><stop stop-color="#7d9a98" stop-opacity=".1"/><stop offset="1" stop-color="#527c7e" stop-opacity=".2"/></linearGradient>
+    <linearGradient id="sky" x1="800" y1="0" x2="800" y2="900" gradientUnits="userSpaceOnUse"><stop stop-color="#f5f0e5"/><stop offset=".58" stop-color="#ebe6d9"/><stop offset="1" stop-color="#d9ded5"/></linearGradient>
+    <linearGradient id="distant" x1="800" y1="235" x2="800" y2="715" gradientUnits="userSpaceOnUse"><stop stop-color="#8d8a78" stop-opacity=".16"/><stop offset="1" stop-color="#8d8a78" stop-opacity=".04"/></linearGradient>
+    <linearGradient id="ridge" x1="800" y1="380" x2="800" y2="900" gradientUnits="userSpaceOnUse"><stop stop-color="#786d5c" stop-opacity=".25"/><stop offset="1" stop-color="#786d5c" stop-opacity=".09"/></linearGradient>
+    <linearGradient id="water" x1="800" y1="570" x2="800" y2="900" gradientUnits="userSpaceOnUse"><stop stop-color="#547e7b" stop-opacity=".12"/><stop offset="1" stop-color="#547e7b" stop-opacity=".28"/></linearGradient>
+    <radialGradient id="sun" cx="0" cy="0" r="1" gradientTransform="matrix(0 120 -120 0 1260 260)" gradientUnits="userSpaceOnUse"><stop stop-color="#c6a978" stop-opacity=".3"/><stop offset="1" stop-color="#c6a978" stop-opacity="0"/></radialGradient>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".72" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .08"/></feComponentTransfer></filter>
   </defs>
-  <path fill="url(#mountain)" d="m0 318 91-67 58 34 128-157 105 145 90-64 132 121 130-207 94 118 91-67 127 119 110-171 142 175 84-79 118 91v251H0V318Z"/>
-  <path fill="#a96e58" fill-opacity=".12" d="m0 383 130-105 116 93 111-138 150 157 137-119 106 108 146-160 120 153 126-105 148 111 110-91v233H0V383Z"/>
-  <path fill="url(#water)" d="M0 398c191-42 296 34 462 12 168-22 257-78 438-28 160 44 260 40 400 2 118-32 216-28 300-5v141H0V398Z"/>
-  <path stroke="#8d7770" stroke-opacity=".2" stroke-width="2" d="M0 426c174-34 307 28 470 10 172-19 260-69 425-26 162 42 258 39 407 1 124-32 215-27 298-7M0 465c176-27 300 20 464 8 179-13 282-48 434-16 153 32 269 29 412 0 120-25 210-21 290-6"/>
-  <path fill="url(#mist)" d="M0 0h1600v520H0z"/>
-  <circle cx="1280" cy="150" r="47" fill="#bd9145" fill-opacity=".18"/>
-  <path stroke="#fffaf1" stroke-opacity=".7" stroke-width="2" d="M90 208c34-20 65-20 95 0m1020-42c35-21 65-21 96 0m112 100c26-16 51-16 77 0"/>
+  <path fill="url(#sky)" d="M0 0h1600v900H0z"/>
+  <circle cx="1260" cy="260" r="160" fill="url(#sun)"/>
+  <circle cx="1260" cy="260" r="42" fill="#bca77e" fill-opacity=".16"/>
+  <path fill="url(#distant)" d="m0 514 155-132 88 64 176-210 122 174 124-105 143 163 176-216 132 168 120-86 158 137 106-83v412H0V514Z"/>
+  <path fill="url(#ridge)" d="m0 635 176-124 123 82 164-194 158 196 143-112 135 145 171-180 144 168 120-99 166 121v262H0V635Z"/>
+  <path stroke="#777666" stroke-opacity=".2" stroke-width="3" d="M0 604c188-72 284 48 466-8 168-52 257-85 407-19 171 76 274 34 420-27 119-50 214-43 307-3"/>
+  <path fill="url(#water)" d="M0 697c191-50 309 25 484 6 172-19 278-66 447-30 170 36 301 52 451 6 91-28 160-30 218-19v240H0V697Z"/>
+  <path stroke="#527c79" stroke-opacity=".23" stroke-width="2" d="M0 748c174-31 317 26 483 10 181-17 280-45 443-16 171 30 302 40 458 2 82-20 151-22 216-13M0 807c173-23 303 21 475 9 182-12 284-34 444-12 170 23 304 30 464 1 77-14 145-17 217-10"/>
+  <path stroke="#f8f5ed" stroke-opacity=".66" stroke-width="2" d="M110 316c42-24 84-24 126 0m858-70c33-19 67-19 101 0m152 74c29-17 59-17 89 0"/>
+  <path fill="#fff" filter="url(#grain)" opacity=".22" d="M0 0h1600v900H0z"/>
 </svg>
