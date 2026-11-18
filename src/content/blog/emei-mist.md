@@ -6,7 +6,7 @@ section: travel
 tags:
   - travel
   - emei-mountain
-image: /images/travel/emei.svg
+image: /images/travel/emei.jpg
 ---
 
 峨眉山的雾很轻，像一层薄薄的纱，贴在山坡和树梢之间。早晨刚起步时，天空还没有完全亮起来，我沿着石阶往上走，脚底踩着路面，手心和山风凉凉的，整个人都慢了下来。

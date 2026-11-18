@@ -1,85 +1,53 @@
 ---
-import { getCollection } from 'astro:content';
 import '../styles/global.css';
+import InkClick from '../components/InkClick.astro';
 
-const allPosts = await getCollection('blog');
-const travelPosts = allPosts.filter((post) => post.data.section === 'travel').sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const skillPosts = allPosts.filter((post) => post.data.section === 'skills').sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const siteName = '我在中国的记忆';
-const dateFormat = new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+const siteName = '胡炳坤的个人博客';
 ---
 
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="旅行见闻与专业技能分享：彼此独立，各自精彩。" />
+    <meta name="description" content="胡炳坤的个人博客：旅行见闻与专业技能，山水行旅与技术手记。" />
+    <meta name="theme-color" content="#f3eee2" />
     <link rel="alternate" type="application/rss+xml" title={`${siteName} RSS`} href="/rss.xml" />
-    <title>{siteName} · 旅行与技能</title>
+    <title>{siteName}</title>
   </head>
-  <body>
-    <main class="page-shell home-shell">
-      <header class="site-header">
-        <a class="wordmark" href="/">{siteName}<span>。</span></a>
-        <nav aria-label="Main navigation">
-          <a href="/travel/">Travel</a>
-          <a href="/skills/">Skills</a>
-        </nav>
-      </header>
+  <body class="home-page">
+    <main class="home-stage">
+      <section class="home-card" aria-labelledby="home-title">
+        <span class="home-seal" aria-hidden="true">胡</span>
 
-      <section class="intro" id="about">
-        <p class="eyebrow">旅行与专业技能 · 两种独立的记录</p>
-        <h1>Beyond the Desk,<br /><span>Amid Mountains and Rivers</span></h1>
-        <p class="intro-copy">从山水街巷的旅行手记，到技术实践与项目复盘。选择一扇门，进入各自完整的内容空间。</p>
+        <div class="home-card-inner">
+          <header class="home-head">
+            <p class="home-eyebrow">INK · MOUNTAINS · WORDS</p>
+            <h1 id="home-title">胡炳坤的个人博客</h1>
+            <p class="home-sub">山水行旅　·　技术手记</p>
+          </header>
+
+          <nav class="home-entries" aria-label="博客栏目">
+            <a class="home-entry" href="/travel/">
+              <span class="home-entry-no" aria-hidden="true">壹</span>
+              <span class="home-entry-title">旅行见闻</span>
+              <span class="home-entry-en">TRAVEL NOTES</span>
+              <span class="home-entry-desc">山水、城市与人间烟火</span>
+              <span class="home-entry-arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="home-entry" href="/skills/">
+              <span class="home-entry-no" aria-hidden="true">贰</span>
+              <span class="home-entry-title">专业技能</span>
+              <span class="home-entry-en">SKILLS &amp; NOTES</span>
+              <span class="home-entry-desc">代码、项目与实践复盘</span>
+              <span class="home-entry-arrow" aria-hidden="true">→</span>
+            </a>
+          </nav>
+
+          <p class="home-foot">择一入卷　·　墨迹随行</p>
+        </div>
       </section>
-
-      <div class="section-columns">
-        <section class="content-section travel-section" aria-labelledby="travel-heading">
-          <div class="section-heading">
-            <div><p class="section-kicker">山水 · 城市 · 人间烟火</p><h2 id="travel-heading">旅行见闻</h2></div>
-            <a class="section-link" href="/travel/">全部旅行 <span aria-hidden="true">↗</span></a>
-          </div>
-          <div class="post-list">
-            {travelPosts.map((post) => (
-              <article class="post-card travel-card">
-                <a class="travel-image-link" href={`/travel/${post.id}/`} aria-label={`阅读：${post.data.title}`}>
-                  <img class="travel-image" src={post.data.image ?? '/images/ink-landscape.svg'} alt={`${post.data.title} 风景预览`} loading="lazy" />
-                </a>
-                <div class="travel-card-body">
-                  <div class="post-meta"><time datetime={post.data.pubDate.toISOString()}>{dateFormat.format(post.data.pubDate)}</time></div>
-                  <h3><a href={`/travel/${post.id}/`}>{post.data.title} <span aria-hidden="true">↗</span></a></h3>
-                  <p>{post.data.description}</p>
-                  <div class="tag-list">{post.data.tags.map((tag) => <span class="tag">#{tag}</span>)}</div>
-                </div>
-              </article>
-            ))}
-            {travelPosts.length === 0 && <p class="empty-state">旅行记录正在整理中。</p>}
-          </div>
-        </section>
-
-        <section class="content-section skills-section" aria-labelledby="skills-heading">
-          <div class="section-heading">
-            <div><p class="section-kicker">技术 · 项目 · 方法</p><h2 id="skills-heading">专业技能</h2></div>
-            <a class="section-link" href="/skills/">全部文章 <span aria-hidden="true">↗</span></a>
-          </div>
-          <div class="post-list">
-            {skillPosts.map((post) => (
-              <article class="post-card skill-card">
-                <div class="post-meta"><time datetime={post.data.pubDate.toISOString()}>{dateFormat.format(post.data.pubDate)}</time></div>
-                <h3><a href={`/skills/${post.id}/`}>{post.data.title} <span aria-hidden="true">↗</span></a></h3>
-                <p>{post.data.description}</p>
-                <div class="tag-list">{post.data.tags.map((tag) => <span class="tag">#{tag}</span>)}</div>
-              </article>
-            ))}
-            {skillPosts.length === 0 && <p class="empty-state">技能文章正在准备中。</p>}
-          </div>
-        </section>
-      </div>
-
-      <footer class="site-footer">
-        <span>© {new Date().getFullYear()} {siteName}</span>
-        <a href="/rss.xml">订阅 RSS</a>
-      </footer>
     </main>
+
+    <InkClick />
   </body>
 </html>

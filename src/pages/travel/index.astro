@@ -1,30 +1,68 @@
 ---
 import { getCollection } from 'astro:content';
-import '../styles/global.css';
+import '../../styles/global.css';
+import InkClick from '../../components/InkClick.astro';
 
 const posts = (await getCollection('blog', ({ data }) => data.section === 'travel')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const dateFormat = new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+const siteName = '胡炳坤的个人博客';
 ---
 
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="中国旅行手记、城市指南与沿途摄影。" />
-    <link rel="alternate" type="application/rss+xml" title="旅行手记 RSS" href="/rss.xml" />
-    <title>Travel · 旅行见闻</title>
+    <meta name="description" content="胡炳坤的旅行见闻：中国山水、城市与沿途故事。" />
+    <meta name="theme-color" content="#f3eee2" />
+    <link rel="alternate" type="application/rss+xml" title={`${siteName} RSS`} href="/rss.xml" />
+    <title>旅行见闻 · {siteName}</title>
   </head>
-  <body class="travel-page">
-    <main class="page-shell">
-      <header class="site-header"><a class="wordmark" href="/">我在中国的记忆<span>。</span></a><nav aria-label="Main navigation"><a class="active" href="/travel/">Travel</a><a href="/skills/">Skills</a></nav></header>
-      <section class="intro section-intro"><p class="eyebrow">TRAVEL · 山水与人间</p><h1>旅行见闻</h1><p class="intro-copy">旅行手记、城市指南与沿途摄影。每一篇都只属于路上的风景与故事。</p></section>
-      <section class="listing-section travel-section" aria-labelledby="travel-heading"><div class="section-heading"><h2 id="travel-heading">全部旅行记录</h2><span>{posts.length} 篇</span></div>
-        <div class="listing-grid">
-          {posts.map((post) => <article class="post-card travel-card"><a class="travel-image-link" href={`/travel/${post.id}/`}><img class="travel-image" src={post.data.image ?? '/images/ink-landscape.svg'} alt={`${post.data.title} 风景预览`} loading="lazy" /></a><div class="travel-card-body"><div class="post-meta"><time datetime={post.data.pubDate.toISOString()}>{dateFormat.format(post.data.pubDate)}</time></div><h3><a href={`/travel/${post.id}/`}>{post.data.title} <span aria-hidden="true">↗</span></a></h3><p>{post.data.description}</p><div class="tag-list">{post.data.tags.map((tag) => <span class="tag">#{tag}</span>)}</div></div></article>)}
-          {posts.length === 0 && <p class="empty-state">旅行记录正在整理中。</p>}
-        </div>
-      </section>
-      <footer class="site-footer"><span>© {new Date().getFullYear()} 我在中国的记忆</span><a href="/rss.xml">订阅 RSS</a></footer>
+  <body class="travel-page travel-index">
+    <main class="page-shell travel-shell">
+      <header class="site-header">
+        <a class="wordmark" href="/">{siteName}<span>。</span></a>
+        <nav aria-label="Main navigation">
+          <a class="active" href="/travel/">旅行见闻</a>
+          <a href="/skills/">专业技能</a>
+        </nav>
+      </header>
+
+      <div class="travel-body">
+        <section class="intro section-intro">
+          <p class="eyebrow">TRAVEL · 山水与人间</p>
+          <h1>旅行见闻</h1>
+          <p class="intro-copy">从山水的留白处出发，记下路途中的城市、风物与人间烟火。</p>
+        </section>
+
+        <section class="listing-section travel-section" aria-labelledby="travel-heading">
+          <div class="section-heading">
+            <h2 id="travel-heading">全部旅行记录</h2>
+            <span class="count">{posts.length} 篇</span>
+          </div>
+          <div class="listing-grid">
+            {posts.map((post) => (
+              <article class="post-card travel-card">
+                <a class="travel-image-link" href={`/travel/${post.id}/`} aria-label={`阅读：${post.data.title}`}>
+                  <img class="travel-image" src={post.data.image ?? '/images/ink-landscape.svg'} alt={`${post.data.title} 风景预览`} loading="lazy" />
+                </a>
+                <div class="travel-card-body">
+                  <div class="post-meta"><time datetime={post.data.pubDate.toISOString()}>{dateFormat.format(post.data.pubDate)}</time></div>
+                  <h3><a href={`/travel/${post.id}/`}>{post.data.title} <span aria-hidden="true">↗</span></a></h3>
+                  <p>{post.data.description}</p>
+                  <div class="tag-list">{post.data.tags.map((tag) => <span class="tag">#{tag}</span>)}</div>
+                </div>
+              </article>
+            ))}
+            {posts.length === 0 && <p class="empty-state">旅行记录正在整理中。</p>}
+          </div>
+        </section>
+      </div>
+
+      <footer class="site-footer">
+        <span>© {new Date().getFullYear()} {siteName}</span>
+      </footer>
     </main>
+
+    <InkClick />
   </body>
 </html>

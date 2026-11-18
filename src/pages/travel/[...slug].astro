@@ -1,6 +1,8 @@
 ---
 import { getCollection, render } from 'astro:content';
 import '../../styles/global.css';
+import InkClick from '../../components/InkClick.astro';
+import Comments from '../../components/Comments.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => data.section === 'travel');
@@ -9,6 +11,40 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 const dateFormat = new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+const siteName = '胡炳坤的个人博客';
 ---
-<html lang="zh-CN"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="description" content={post.data.description} /><link rel="alternate" type="application/rss+xml" title="旅行手记 RSS" href="/rss.xml" /><title>{post.data.title} · 旅行见闻</title></head>
-<body class="travel-page"><main class="page-shell article-shell"><header class="site-header"><a class="wordmark" href="/">我在中国的记忆<span>。</span></a><nav aria-label="Main navigation"><a class="active" href="/travel/">Travel</a><a href="/skills/">Skills</a></nav></header><article class="article travel-article"><a class="back-link" href="/travel/">← 返回旅行见闻</a><p class="eyebrow"><time datetime={post.data.pubDate.toISOString()}>{dateFormat.format(post.data.pubDate)}</time></p><h1>{post.data.title}</h1><p class="article-description">{post.data.description}</p>{post.data.image && <img class="article-hero-image" src={post.data.image} alt={`${post.data.title} 风景`} />}<div class="article-content"><Content /></div><div class="tag-list">{post.data.tags.map((tag) => <span class="tag">#{tag}</span>)}</div></article><footer class="site-footer"><span>© {new Date().getFullYear()} 我在中国的记忆</span><a href="/rss.xml">订阅 RSS</a></footer></main></body></html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={post.data.description} />
+    <meta name="theme-color" content="#f3eee2" />
+    <link rel="alternate" type="application/rss+xml" title={`${siteName} RSS`} href="/rss.xml" />
+    <title>{post.data.title} · 旅行见闻 · {siteName}</title>
+  </head>
+  <body class="travel-page travel-article-page">
+    <main class="page-shell article-shell">
+      <header class="site-header">
+        <a class="wordmark" href="/">{siteName}<span>。</span></a>
+        <nav aria-label="Main navigation">
+          <a class="active" href="/travel/">旅行见闻</a>
+          <a href="/skills/">专业技能</a>
+        </nav>
+      </header>
+      <article class="article travel-article">
+        <a class="back-link" href="/travel/">← 返回旅行见闻</a>
+        <p class="eyebrow"><time datetime={post.data.pubDate.toISOString()}>{dateFormat.format(post.data.pubDate)}</time></p>
+        <h1>{post.data.title}</h1>
+        <p class="article-description">{post.data.description}</p>
+        {post.data.image && <img class="article-hero-image" src={post.data.image} alt={`${post.data.title} 风景`} />}
+        <div class="article-content"><Content /></div>
+        <div class="tag-list">{post.data.tags.map((tag) => <span class="tag">#{tag}</span>)}</div>
+        <Comments />
+      </article>
+      <footer class="site-footer">
+        <span>© {new Date().getFullYear()} {siteName}</span>
+      </footer>
+    </main>
+    <InkClick />
+  </body>
+</html>

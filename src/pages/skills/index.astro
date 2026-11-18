@@ -1,28 +1,65 @@
 ---
 import { getCollection } from 'astro:content';
-import '../styles/global.css';
+import '../../styles/global.css';
+import InkClick from '../../components/InkClick.astro';
 
 const posts = (await getCollection('blog', ({ data }) => data.section === 'skills')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const dateFormat = new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+const siteName = '胡炳坤的个人博客';
 ---
 
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="技术文章、项目复盘与实用教程。" />
-    <link rel="alternate" type="application/rss+xml" title="技能分享 RSS" href="/rss.xml" />
-    <title>Skills · 专业技能分享</title>
+    <meta name="description" content="胡炳坤的专业技能文章：技术实践、项目复盘与可复用的方法。" />
+    <meta name="theme-color" content="#f6f4ee" />
+    <link rel="alternate" type="application/rss+xml" title={`${siteName} RSS`} href="/rss.xml" />
+    <title>专业技能 · {siteName}</title>
   </head>
-  <body class="skills-page">
-    <main class="page-shell">
-      <header class="site-header"><a class="wordmark" href="/">我在中国的记忆<span>。</span></a><nav aria-label="Main navigation"><a href="/travel/">Travel</a><a class="active" href="/skills/">Skills</a></nav></header>
-      <section class="skills-intro"><p class="skills-label">PROFESSIONAL SKILL SHARING</p><h1>专业技能分享</h1><p>技术文章、项目复盘与可复用的实践教程。</p></section>
-      <section class="skills-listing" aria-labelledby="skills-heading"><div class="section-heading"><h2 id="skills-heading">全部技能文章</h2><span>{posts.length} 篇</span></div><div class="skills-post-list">
-        {posts.map((post) => <article class="skill-card"><div class="post-meta"><time datetime={post.data.pubDate.toISOString()}>{dateFormat.format(post.data.pubDate)}</time><div class="tag-list">{post.data.tags.map((tag) => <span class="tag">#{tag}</span>)}</div></div><h3><a href={`/skills/${post.id}/`}>{post.data.title} <span aria-hidden="true">↗</span></a></h3><p>{post.data.description}</p></article>)}
-        {posts.length === 0 && <p class="empty-state">技能文章正在准备中。</p>}
-      </div></section>
-      <footer class="site-footer"><span>© {new Date().getFullYear()} 我在中国的记忆</span><a href="/rss.xml">订阅 RSS</a></footer>
+  <body class="skills-page skills-index">
+    <main class="page-shell skills-shell">
+      <header class="site-header">
+        <a class="wordmark" href="/">{siteName}<span>。</span></a>
+        <nav aria-label="Main navigation">
+          <a href="/travel/">旅行见闻</a>
+          <a class="active" href="/skills/">专业技能</a>
+        </nav>
+      </header>
+
+      <div class="skills-body">
+        <section class="skills-intro">
+          <p class="skills-label">PROFESSIONAL SKILL SHARING</p>
+          <h1>专业技能</h1>
+          <p>技术文章、项目复盘与可复用的实践教程。</p>
+        </section>
+
+        <section class="skills-listing" aria-labelledby="skills-heading">
+          <div class="section-heading">
+            <h2 id="skills-heading">全部技能文章</h2>
+            <span class="count">{posts.length} 篇</span>
+          </div>
+          <div class="skills-post-list">
+            {posts.map((post) => (
+              <article class="skill-card">
+                <div class="post-meta">
+                  <time datetime={post.data.pubDate.toISOString()}>{dateFormat.format(post.data.pubDate)}</time>
+                  <div class="tag-list">{post.data.tags.map((tag) => <span class="tag">#{tag}</span>)}</div>
+                </div>
+                <h3><a href={`/skills/${post.id}/`}>{post.data.title} <span aria-hidden="true">↗</span></a></h3>
+                <p>{post.data.description}</p>
+              </article>
+            ))}
+            {posts.length === 0 && <p class="empty-state">技能文章正在准备中。</p>}
+          </div>
+        </section>
+      </div>
+
+      <footer class="site-footer">
+        <span>© {new Date().getFullYear()} {siteName}</span>
+      </footer>
     </main>
+
+    <InkClick />
   </body>
 </html>

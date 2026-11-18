@@ -6,7 +6,7 @@ section: travel
 tags:
   - travel
   - leshan
-image: /images/travel/leshan.svg
+image: /images/travel/leshan.jpg
 ---
 
 我在乐山的夜市走了一阵，灯光很亮，空气里混着油炸香、蒜香和热气。小店挨着小店，很多都没有特别华丽的招牌，但每一家都在忙着把一种味道做得真实。

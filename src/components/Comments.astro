@@ -1,0 +1,53 @@
+---
+import { comments } from '../config/comments';
+---
+
+{
+  comments.enabled && (
+    <section class="comments" aria-labelledby="comments-title">
+      <header class="comments-head">
+        <p class="comments-eyebrow">COMMENTS</p>
+        <h2 id="comments-title">留言</h2>
+        <p class="comments-note">以 GitHub 账号登录后留言；若评论框未显示，请检查网络后刷新。</p>
+      </header>
+
+      <div class="comments-frame">
+        <p class="comments-hint" role="status">评论加载中…</p>
+
+        <script
+          is:inline
+          src="https://utteranc.es/client.js"
+          repo={comments.repo}
+          issue-term={comments.issueTerm}
+          theme={comments.theme}
+          crossorigin="anonymous"
+          async
+        ></script>
+
+        <script is:inline>
+          (() => {
+            const frame = document.currentScript?.closest('.comments-frame');
+            if (!frame) return;
+            const hint = frame.querySelector('.comments-hint');
+            if (!hint) return;
+
+            let ready = false;
+            const timer = window.setTimeout(() => {
+              if (ready) return;
+              hint.textContent =
+                '评论框未能加载：请检查网络，或确认仓库已安装 Utterances App（参考 README）。';
+            }, 6000);
+
+            // Utterances 加载成功后会向父页面发送 resize 消息
+            window.addEventListener('message', (event) => {
+              if (!/^https:\/\/([a-z0-9-]+\.)?utteranc\.es$/.test(event.origin)) return;
+              ready = true;
+              window.clearTimeout(timer);
+              hint.hidden = true;
+            });
+          })();
+        </script>
+      </div>
+    </section>
+  )
+}
